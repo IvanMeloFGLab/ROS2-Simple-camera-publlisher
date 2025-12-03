@@ -186,12 +186,22 @@ Internally the node:
 ## References
 
 https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html
+
 https://docs.opencv.org/4.x/d4/da8/group__imgcodecs.html#ga461f9ac09887e47797a54567df3b8b63
+
 https://docs.opencv.org/4.x/d8/d6a/group__imgcodecs__flags.html
+
 https://askubuntu.com/questions/1542652/getting-rpicam-tools-rpicam-apps-working-on-ubuntu-22-04-lts-for-the-raspber
+
 https://github.com/raspberrypi/libcamera
+
 https://github.com/raspberrypi/rpicam-apps.git
-https://www.waveshare.com/wiki/IMX219-83_Stereo_Camera#Working_with_Raspberry_Pi_5_.28libcamera.29:%7E:text=Camera%20Documentation.-,Working%20with%20Raspberry%20Pi%205%20(libcamera),-Bookworm%20will%20not
+
+https://www.waveshare.com/wiki/IMX219-83_Stereo_Camera#Working_with_Raspberry_Pi_5_.28libcamera.29:
+%7E:text=Camera%20Documentation.-,Working%20with%20Raspberry%20Pi%205%20(libcamera),-Bookworm%20will%20not
+
 https://github.com/umlaeute/v4l2loopback
+
 https://wiki.archlinux.org/title/V4l2loopback
+
 https://github.com/IvanMeloFGLab/I-Manual-Pizzlebot-I

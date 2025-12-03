@@ -16,7 +16,6 @@ find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(Threads REQUIRED)
-#find_package(HailoRT REQUIRED)
 
 add_executable(camera_pub src/camera_publisher_c.cpp)
 ament_target_dependencies(camera_pub rclcpp sensor_msgs cv_bridge OpenCV)
@@ -24,24 +23,12 @@ ament_target_dependencies(camera_pub rclcpp sensor_msgs cv_bridge OpenCV)
 add_executable(camera_sub_com src/camera_subs_comp.cpp)
 ament_target_dependencies(camera_sub_com rclcpp sensor_msgs OpenCV)
 
-#add_executable(yolo11 src/yolo.cpp)
-#ament_target_dependencies(yolo11 rclcpp sensor_msgs cv_bridge OpenCV ament_index_cpp)
-#target_link_libraries(yolo11 HailoRT::libhailort Threads::Threads)
-
-#add_executable(yolo8 src/yolo2.cpp)
-#ament_target_dependencies(yolo8 rclcpp sensor_msgs cv_bridge OpenCV ament_index_cpp)
-#target_link_libraries(yolo8 HailoRT::libhailort Threads::Threads)
-
 install(TARGETS
   camera_pub
   camera_sub_com
   DESTINATION lib/${PROJECT_NAME}
 )
 
-install(DIRECTORY yolos
-  DESTINATION share/${PROJECT_NAME}
-  FILES_MATCHING PATTERN "*.hef"
-)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

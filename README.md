@@ -59,6 +59,21 @@ In a sourced terminal:
 ros2 run cpp_camera camera_pub --ros-args -p board:=jorin -p Compression:=false -p preview:=true
 ```
 
+### Example: Jetson Orin/Nano (compressed PNG, no preview, flipped vertically)
+
+```bash
+ros2 run cpp_camera camera_pub --ros-args -p board:=jorin -p Compression:=true -p format:=1 -p preview:=false -p mode:=0 -p Vflip:=true
+```
+
+This will:
+
+- Use the Jetson Orin camera (`GStreamer`) backend.
+- Encode each frame as PNG and publish `sensor_msgs/msg/CompressedImage` on `/video_source/compressed`.
+- Disable the local preview window.
+- Flip the image vertically.
+
+---
+
 ### Example: PC / Laptop (USB webcam, raw images)
 
 ```bash
@@ -97,9 +112,35 @@ All parameters are ROS 2 parameters of the `camera_publisher` node.
 | `board`       | string  | `"jorin"`  | Capture backend. `"PC"` for OpenCV/USB cameras, `"rasp"` for Raspberry Pi, `"jorin/jnano"` for Jetson Orin and Jetson Nano. |
 | `Compression` | bool    | `false` | If `false`, publish raw `sensor_msgs/msg/Image` on `/video_source/raw`. If `true`, encode frames and publish `sensor_msgs/msg/CompressedImage` on `/video_source/compressed`. |
 | `preview`     | bool    | `false` | Enable local preview. |
-| `mode`        | int     | `0`     | Resolution/FPS preset. Each integer index maps to a `{width, height, fps}` triplet. There are separate maps for NANO/ORIN/PC and Raspberry Pi backends. See `res_map_`/`res_map2_` in the source for exact values or parameter descriptors. |
+| `mode`        | int     | `0`     | Resolution/FPS preset. Each integer index maps to a `{width, height, fps}` triplet. There are separate maps for NANO/ORIN/PC and Raspberry Pi backends. See mode section or parameter descriptors for more information. |
 | `format`      | int     | `0`     | Compression format when `Compression=true`: `0 = JPEG`, `1 = PNG`, `2 = WEBP`. |
 | `VCam_num`  | int  | `100`   | Virtual camera index that the code read from. **ONLY for Raspberry Pi**. |
+
+### Mode for Jetson Nano/Orin and PC
+
+| Mode      | Width   | Height | FPS  |
+|-----------|---------|--------|------|
+| `0`       | `640`   | `480`  | `30` |
+| `1`       | `640`   | `480`  | `60` |
+| `2`       | `1280`  | `720`  | `30` |
+| `3`       | `1280`  | `720`  | `60` |
+| `4`       | `1640`  | `1232` | `30` |
+| `5`       | `1920`  | `1080` | `30` |
+| `6`       | `3280`  | `1848` | `28` |
+| `7`       | `3264`  | `2464` | `21` |
+
+### Mode for Raspberry Pi
+
+| Mode      | Width   | Height | FPS  |
+|-----------|---------|--------|------|
+| `0`       | `640`   | `480`  | `30` |
+| `1`       | `640`   | `480`  | `60` |
+| `2`       | `640`   | `480`  | `90` |
+| `3`       | `640`   | `480`  | `103` |
+| `4`       | `1640`  | `1232` | `30` |
+| `5`       | `1640`  | `1232` | `41` |
+| `6`       | `1920`  | `1080` | `30` |
+| `7`       | `1920`  | `1080` | `47` |
 
 ### Flips
 
@@ -142,7 +183,15 @@ Internally the node:
 
 ---
 
-## Notes
+## References
 
-- This package is intended as a **simple, reusable camera source** for ROS 2 projects.
-- For detailed resolution / FPS presets, see the `res_map_` and `res_map2_` definitions in `src/camera_publisher_c.cpp`.
+https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html
+https://docs.opencv.org/4.x/d4/da8/group__imgcodecs.html#ga461f9ac09887e47797a54567df3b8b63
+https://docs.opencv.org/4.x/d8/d6a/group__imgcodecs__flags.html
+https://askubuntu.com/questions/1542652/getting-rpicam-tools-rpicam-apps-working-on-ubuntu-22-04-lts-for-the-raspber
+https://github.com/raspberrypi/libcamera
+https://github.com/raspberrypi/rpicam-apps.git
+https://www.waveshare.com/wiki/IMX219-83_Stereo_Camera#Working_with_Raspberry_Pi_5_.28libcamera.29:%7E:text=Camera%20Documentation.-,Working%20with%20Raspberry%20Pi%205%20(libcamera),-Bookworm%20will%20not
+https://github.com/umlaeute/v4l2loopback
+https://wiki.archlinux.org/title/V4l2loopback
+https://github.com/IvanMeloFGLab/I-Manual-Pizzlebot-I

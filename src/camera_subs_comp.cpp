@@ -13,13 +13,9 @@ public:
 
 private:
   void callback(const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
-    // Crear un cv::Mat envolviendo los datos comprimidos
     cv::Mat raw_data(1, msg->data.size(), CV_8UC1, const_cast<unsigned char*>(msg->data.data()));
 
-    // Elegir modo de lectura según formato
     int imread_flag = cv::IMREAD_COLOR;
-    // Si quisieras usar msg->format:
-    // if (msg->format == "mono8") imread_flag = cv::IMREAD_GRAYSCALE;
 
     cv::Mat image = cv::imdecode(raw_data, imread_flag);
 

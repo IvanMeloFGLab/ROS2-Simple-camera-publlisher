@@ -91,7 +91,7 @@ public:
     publisher_ = this->create_publisher<sensor_msgs::msg::Image>("/video_source/raw", 10);
     com_publisher_ = this->create_publisher<sensor_msgs::msg::CompressedImage>("/video_source/compressed", 10);
 
-    this->declare_parameter<std::string>("board", "PC");
+    this->declare_parameter<std::string>("board", "jorin");
     this->declare_parameter<bool>("Compression", false);
     this->declare_parameter<bool>("preview", false);
 

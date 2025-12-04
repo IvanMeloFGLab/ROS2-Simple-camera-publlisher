@@ -31,7 +31,7 @@ set(camera_ui_node_HDRS
 
 qt5_wrap_cpp(camera_ui_node_MOCS ${puzzlesim_node_HDRS})
 
-rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
+#rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
 
 add_executable(camera_pub src/camera_publisher_c.cpp)
 ament_target_dependencies(camera_pub rclcpp sensor_msgs cv_bridge OpenCV)
@@ -42,7 +42,7 @@ ament_target_dependencies(camera_sub_com rclcpp sensor_msgs OpenCV)
 add_executable(camera_ui ${camera_ui_node_SRCS} ${camera_ui_node_MOCS})
 target_link_libraries(camera_ui Qt5::Widgets)
 ament_target_dependencies(camera_ui rclcpp ament_index_cpp)
-target_link_libraries(camera_ui "${cpp_typesupport_target}")
+#target_link_libraries(camera_ui "${cpp_typesupport_target}")
 
 install(TARGETS
   camera_pub

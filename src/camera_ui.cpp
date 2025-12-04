@@ -1,7 +1,7 @@
 #include <QApplication>
 
 #include <rclcpp/rclcpp.hpp>
-#include "cpp_camera/camera_window.h"
+#include "cpp_camera/camera_ui_window.h"
 
 class mApp : public QApplication {
 public:
@@ -19,7 +19,7 @@ public:
   int exec() {
 
     cpp_camera::CameraWindow CameraWin(psn_);
-    puzzlesimWin.show();
+    CameraWin.show();
 
     return QApplication::exec();
   }

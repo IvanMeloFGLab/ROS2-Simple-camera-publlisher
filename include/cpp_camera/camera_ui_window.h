@@ -12,13 +12,16 @@ using std::shared_ptr;
 using std::make_shared;
 using std::to_string;
 
-namespace cpp_puzzlesim {
+namespace cpp_camera {
 
-class PuzzlesimWindow : public QWidget {
+class CameraWindow : public QWidget {
 
 public:
-  PuzzlesimWindow(rclcpp::Node::SharedPtr& node_handle, QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
-  ~PuzzlesimWindow();
+  CameraWindow(rclcpp::Node::SharedPtr& node_handle, QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
+  ~CameraWindow();
+
+protected:
+  void paintEvent(QPaintEvent* event);
 
 private slots:
   void onUpdate();

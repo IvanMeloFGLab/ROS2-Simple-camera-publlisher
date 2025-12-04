@@ -117,6 +117,7 @@ public:
     this->declare_parameter<int>("format", 0, desc2);
 
     this->declare_parameter<int>("VCam_num", 100);
+    this->declare_parameter<int>("fps", 30);
     this->declare_parameter<bool>("Hflip", false);
     this->declare_parameter<bool>("Vflip", true);
 
@@ -203,6 +204,7 @@ public:
     std::string hflip = this->get_parameter("Hflip").as_bool() ? "--hflip" : "";
     std::string vflip = this->get_parameter("Vflip").as_bool() ? "--vflip" : "";
     com_format_ = this->get_parameter("format").as_int();
+    s_fps_ = this->get_parameter("fps").as_int();
     jpegq_ = this->get_parameter("JPEG_quality").as_int();
     pngq_ = this->get_parameter("PNG_quality").as_int();
     webpq_ = this->get_parameter("WEBP_quality").as_int();
@@ -316,6 +318,7 @@ private:
     std::string hflip = this->get_parameter("Hflip").as_bool() ? "--hflip" : "";
     std::string vflip = this->get_parameter("Vflip").as_bool() ? "--vflip" : "";
     com_format_ = this->get_parameter("format").as_int();
+    s_fps_ = this->get_parameter("fps").as_int();
     jpegq_ = this->get_parameter("JPEG_quality").as_int();
     pngq_ = this->get_parameter("PNG_quality").as_int();
     webpq_ = this->get_parameter("WEBP_quality").as_int();
@@ -340,6 +343,15 @@ private:
       } else if (param.get_name() == "Vflip") {
         vflip = param.as_bool() ? "--vflip" : "";
         RCLCPP_INFO(this->get_logger(), "Image fliped vertically.");
+      } else if (param.get_name() == "fps") {
+        if (param.as_int() >= 0) {
+          s_fps_ = param.as_int();
+          RCLCPP_INFO(this->get_logger(), "Cambiando fps.");
+        } else {
+          RCLCPP_ERROR(this->get_logger(), "Los fps deben de ser mayor o igual a 0.");
+          result.successful = false;
+          result.reason = "Los fps deben de ser mayor o igual a 0.";
+        }
       } else if (param.get_name() == "board") {
         board = param.as_string();
         if (board != "rasp" && board != "jnano" && board != "jorin" && board != "PC") {
@@ -450,7 +462,7 @@ private:
     }
 
     timer_ = this->create_wall_timer(
-      std::chrono::milliseconds(int(1000/stoi(fps))), std::bind(&CameraPublisher::timer_callback, this)
+      std::chrono::milliseconds(int(1000/s_fps_)), std::bind(&CameraPublisher::timer_callback, this)
     );
 
     board_ = board;
@@ -470,7 +482,7 @@ private:
   cv::VideoCapture cap_;
   std::string cmd_, board_, prev_, vflip_, hflip_, d_fps_;
   bool compression_;
-  int com_format_, jpegq_, pngq_, webpq_;
+  int com_format_, jpegq_, pngq_, webpq_, s_fps_;
   ProcessGuard proc_;
   std::map<int, std::vector<std::string>> res_map_, res_map2_;
 };

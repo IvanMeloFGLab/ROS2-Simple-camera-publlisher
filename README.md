@@ -113,6 +113,7 @@ All parameters are ROS 2 parameters of the `camera_publisher` node.
 | `Compression` | bool    | `false` | If `false`, publish raw `sensor_msgs/msg/Image` on `/video_source/raw`. If `true`, encode frames and publish `sensor_msgs/msg/CompressedImage` on `/video_source/compressed`. |
 | `preview`     | bool    | `false` | Enable local preview. |
 | `mode`        | int     | `0`     | Resolution/FPS preset. Each integer index maps to a `{width, height, fps}` triplet. There are separate maps for NANO/ORIN/PC and Raspberry Pi backends. See mode section or parameter descriptors for more information. |
+| `fps`        | int     | `30`     | FPS that the capture frames will be sent on the topic. |
 | `format`      | int     | `0`     | Compression format when `Compression=true`: `0 = JPEG`, `1 = PNG`, `2 = WEBP`. |
 | `VCam_num`  | int  | `100`   | Virtual camera index that the code read from. **ONLY for Raspberry Pi**. |
 
